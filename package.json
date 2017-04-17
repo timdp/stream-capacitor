@@ -1,6 +1,6 @@
 {
   "name": "stream-capacitor",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Throttles streams based on customizable throughput.",
   "main": "index.js",
   "author": "Tim De Pauw (https://github.com/timdp)",
