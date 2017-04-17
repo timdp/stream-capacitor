@@ -1,13 +1,15 @@
+'use strict'
+
 const test = require('ava')
 const sinon = require('sinon')
 const isStream = require('is-stream')
 const pumpify = require('pumpify')
-const {Readable, Transform} = require('stream')
+const stream = require('stream')
 const StreamCapacitor = require('./')
 
 const disposables = []
 
-class TimedReadable extends Readable {
+class TimedReadable extends stream.Readable {
   constructor (time, max) {
     super({objectMode: true})
     this._time = time
@@ -42,7 +44,7 @@ class TimedReadable extends Readable {
   }
 }
 
-class TimedTransform extends Transform {
+class TimedTransform extends stream.Transform {
   constructor (time) {
     super({objectMode: true})
     this._time = time

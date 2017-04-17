@@ -1,5 +1,7 @@
-const {Transform} = require('stream')
-const {EventEmitter} = require('events')
+'use strict'
+
+const Transform = require('stream').Transform
+const EventEmitter = require('events').EventEmitter
 
 const DEFAULT_COUNT = () => 1
 
