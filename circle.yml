@@ -1,7 +1,7 @@
 machine:
   environment:
     NODE_ENV: 'test'
-    npm_config_progress: 'false'
+    NPM_CONFIG_PROGRESS: 'false'
 test:
   override:
     - nvm use 4 && npm run test:ci
