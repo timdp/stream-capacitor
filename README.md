@@ -36,11 +36,11 @@ function if you prefer.
 import StreamCapacitor from 'stream-capacitor'
 import pumpify from 'pumpify'
 
-// When we are waiting for 10,000 or more items on the output side, pause input.
+// When we are waiting for 10,000 or more items on the output side, pause input
 const highWaterMark = 10000
-// When the queue size drops below 3,000 again, resume input.
+// When the queue size drops below 3,000 again, resume input
 const lowWaterMark = 3000
-// Options are passed to the internal streams.
+// Options are passed to the internal streams
 const options = {objectMode: true}
 
 // Create a new capacitor
