@@ -1,0 +1,36 @@
+{
+  "name": "stream-capacitor",
+  "version": "0.0.0",
+  "description": "Throttles streams based on customizable throughput.",
+  "main": "index.js",
+  "author": "Tim De Pauw (https://github.com/timdp)",
+  "contributors": [
+    "Tim De Pauw (https://github.com/timdp)"
+  ],
+  "engines": {
+    "node": ">=4"
+  },
+  "license": "MIT",
+  "files": [
+    "index.js"
+  ],
+  "scripts": {
+    "test": "standard && nyc ava",
+    "test:ci": "npm run test:ci:pre && npm run test:ci:cover && npm run test:ci:post",
+    "test:ci:pre": "mkdir $CIRCLE_TEST_REPORTS/npm-test",
+    "test:ci:cover": "nyc ava --tap | tap-xunit >$CIRCLE_TEST_REPORTS/npm-test/results.xml",
+    "test:ci:post": "nyc report --reporter=text-lcov | coveralls"
+  },
+  "repository": "timdp/stream-capacitor",
+  "bugs": "https://github.com/timdp/stream-capacitor/issues",
+  "dependencies": {},
+  "devDependencies": {
+    "ava": "^0.19.1",
+    "coveralls": "^2.13.0",
+    "is-stream": "^1.1.0",
+    "nyc": "^10.2.0",
+    "pumpify": "^1.3.5",
+    "sinon": "^2.1.0",
+    "standard": "^10.0.2"
+  }
+}

@@ -1,0 +1,33 @@
+graph LR;
+  R[Readable]
+  W[Writable]
+  In[<center>Capacitor<br>Input</center>]
+  Out[<center>Capacitor<br>Output</center>]
+  T0[Transforms]
+  Tn[Transforms]
+  T1[Transform]
+  T2[...]
+  T3[Transform]
+
+  subgraph Input
+    R --> T0
+  end
+
+  T0 ==> In
+  In ==> T1
+
+  subgraph Throttled Operations
+    T1 --> T2
+    T2 --> T3
+  end
+
+  T3 ==> Out
+  Out ==> Tn
+
+  subgraph Output
+    Tn --> W
+  end
+
+  classDef default fill:#FFF,stroke:#333
+  classDef cap fill:#FE0
+  class In,Out cap
