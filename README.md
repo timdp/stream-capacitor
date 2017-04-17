@@ -36,7 +36,7 @@ function if you prefer.
 import StreamCapacitor from 'stream-capacitor'
 import pumpify from 'pumpify'
 
-// When we are waiting for 10,000 or more items on the output side, pause input
+// When waiting for at least 10,000 items on the output side, pause input
 const highWaterMark = 10000
 // When the queue size drops below 3,000 again, resume input
 const lowWaterMark = 3000
@@ -97,7 +97,7 @@ const highWaterMark = 10000
 const lowWaterMark = 3000
 const options = {
   objectMode: true,
-  count: customCount    // See above
+  count: customCounter  // See above
 }
 const cap = new StreamCapacitor(highWaterMark, lowWaterMark, options)
 const flow = pumpify.obj(
