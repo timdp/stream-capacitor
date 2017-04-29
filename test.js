@@ -210,14 +210,76 @@ test.cb('uses delta', (t) => {
   }, 100)
 })
 
-test.todo('exposes closed flag')
+test('exposes closed flag', (t) => {
+  const cap = new StreamCapacitor(100, 10)
+  t.false(cap.closed)
+})
 
-test.todo('updates closed flag')
+test('updates closed flag', (t) => {
+  const cap = new StreamCapacitor(100, 10)
+  cap.closed = true
+  t.true(cap.closed)
+})
 
-test.todo('exposes high-water mark')
+test('emits close event upon close', (t) => {
+  const spy = sinon.spy()
+  const cap = new StreamCapacitor(100, 10)
+  cap.on('close', spy)
+  cap.closed = true
+  t.true(spy.called)
+})
 
-test.todo('updates high-water mark')
+test('emits open event upon open', (t) => {
+  const spy = sinon.spy()
+  const cap = new StreamCapacitor(100, 10)
+  cap.on('open', spy)
+  cap.closed = true
+  cap.closed = false
+  t.true(spy.called)
+})
 
-test.todo('exposes low-water mark')
+test('closed is idempotent', (t) => {
+  const spy = sinon.spy()
+  const cap = new StreamCapacitor(100, 10)
+  cap.on('close', spy)
+  cap.closed = true
+  cap.closed = true
+  cap.closed = true
+  t.is(spy.callCount, 1)
+})
 
-test.todo('updates low-water mark')
+test('exposes high-water mark', (t) => {
+  const cap = new StreamCapacitor(100, 50)
+  t.is(cap.highWaterMark, 100)
+})
+
+test('updates high-water mark', (t) => {
+  const cap = new StreamCapacitor(100, 50)
+  cap.highWaterMark = 200
+  t.is(cap.highWaterMark, 200)
+})
+
+test('exposes low-water mark', (t) => {
+  const cap = new StreamCapacitor(100, 50)
+  t.is(cap.lowWaterMark, 50)
+})
+
+test('updates low-water mark', (t) => {
+  const cap = new StreamCapacitor(100, 50)
+  cap.lowWaterMark = 20
+  t.is(cap.lowWaterMark, 20)
+})
+
+test('reopens when updating high-water mark', (t) => {
+  const cap = new StreamCapacitor(100, 50)
+  cap.closed = true
+  cap.highWaterMark = 200
+  t.false(cap.closed)
+})
+
+test('reopens when updating low-water mark', (t) => {
+  const cap = new StreamCapacitor(100, 50)
+  cap.closed = true
+  cap.lowWaterMark = 20
+  t.false(cap.closed)
+})
