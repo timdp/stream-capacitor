@@ -36,10 +36,28 @@ class StreamCapacitor extends EventEmitter {
     this._highWaterMark = highWaterMark
     this._lowWaterMark = lowWaterMark
     this._delta = 0
-    this._corked = false
+    this._closed = false
     this._boundUpdate = this._update.bind(this)
     this._input = new Port(this, options)
     this._output = new Port(this, options)
+  }
+
+  get highWaterMark () {
+    return this._highWaterMark
+  }
+
+  set highWaterMark (value) {
+    this._highWaterMark = value
+    this._update()
+  }
+
+  get lowWaterMark () {
+    return this._lowWaterMark
+  }
+
+  set lowWaterMark (value) {
+    this._lowWaterMark = value
+    this._update()
   }
 
   get delta () {
@@ -63,28 +81,31 @@ class StreamCapacitor extends EventEmitter {
     return this._output
   }
 
-  _update () {
-    const count = this.count
-    if (count >= this._highWaterMark) {
-      this._cork()
-    } else if (count < this._lowWaterMark) {
-      this._uncork()
-    }
+  get closed () {
+    return this._closed
   }
 
-  _cork () {
-    if (!this._corked) {
-      this._corked = true
+  set closed (value) {
+    if (this._closed === value) {
+      return
+    }
+    this._closed = value
+    if (this._closed) {
       this._input.cork()
       this.emit('close')
+    } else {
+      this._input.uncork()
+      this.emit('open')
     }
   }
 
-  _uncork () {
-    if (this._corked) {
-      this._corked = false
-      this._input.uncork()
-      this.emit('open')
+  _update () {
+    if (this._closed) {
+      if (this.count < this._lowWaterMark) {
+        this.closed = false
+      }
+    } else if (this.count >= this._highWaterMark) {
+      this.closed = true
     }
   }
 }

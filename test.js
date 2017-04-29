@@ -209,3 +209,15 @@ test.cb('uses delta', (t) => {
     t.end()
   }, 100)
 })
+
+test.todo('exposes closed flag')
+
+test.todo('updates closed flag')
+
+test.todo('exposes high-water mark')
+
+test.todo('updates high-water mark')
+
+test.todo('exposes low-water mark')
+
+test.todo('updates low-water mark')
